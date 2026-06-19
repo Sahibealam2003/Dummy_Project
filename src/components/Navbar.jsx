@@ -269,19 +269,56 @@ const Navbar = ({ onCartOpen }) => {
                                 )}
                             </>
                         ) : (
-                            <button
-                                onClick={() => nav("/login")}
-                                className="flex items-center gap-2 rounded-xl border px-3 py-1.5 text-sm font-semibold transition-colors hover:bg-stone-50 cursor-pointer"
-                                style={{ borderColor: "#d4c9be", color: "#2c2420" }}
-                            >
-                                <div
-                                    className="flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-white"
-                                    style={{ background: "#7c6e64" }}
+                            <>
+                                <button
+                                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                                    className="flex items-center gap-2 rounded-xl border px-3 py-1.5 text-sm font-semibold transition-colors hover:bg-stone-50 cursor-pointer"
+                                    style={{ borderColor: "#d4c9be", color: "#2c2420" }}
                                 >
-                                    U
-                                </div>
-                                <span className="hidden sm:inline text-xs">Sign In</span>
-                            </button>
+                                    <div
+                                        className="flex h-6 w-6 items-center justify-center rounded-full text-[#8c7e74] bg-[#f5f3ef]"
+                                    >
+                                        <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
+                                    </div>
+                                    <span className="hidden sm:inline text-xs">Sign In</span>
+                                    <svg className={`h-3 w-3 text-[#8c7e74] transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+
+                                {dropdownOpen && (
+                                    <div
+                                        className="absolute right-0 mt-2 w-56 rounded-2xl border border-[#ede8e2] bg-white p-4 shadow-xl animate-scale-in"
+                                        style={{ zIndex: 100 }}
+                                    >
+                                        <p className="text-xs font-black text-[#2c2420] mb-1">Welcome to SHOPx</p>
+                                        <p className="text-[10px] text-[#8c7e74] leading-normal mb-3">Sign in to track orders, access sales, and get members-only pricing.</p>
+                                        
+                                        <Link 
+                                            to="/login" 
+                                            onClick={() => setDropdownOpen(false)}
+                                            className="block text-center rounded-xl bg-gradient-to-r from-[#e8622a] to-[#c44e1e] py-2 text-xs font-black uppercase tracking-wider text-white shadow-md shadow-[#e8622a]/15 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
+                                        >
+                                            Sign In
+                                        </Link>
+                                        
+                                        <div className="h-px bg-[#f5f3ef] my-3" />
+                                        
+                                        <div className="text-center">
+                                            <span className="text-[10px] text-[#8c7e74]">New member? </span>
+                                            <Link 
+                                                to="/signup" 
+                                                onClick={() => setDropdownOpen(false)}
+                                                className="text-[10px] font-bold text-[#e8622a] hover:underline cursor-pointer"
+                                            >
+                                                Create Account
+                                            </Link>
+                                        </div>
+                                    </div>
+                                )}
+                            </>
                         )}
                     </div>
                 </div>

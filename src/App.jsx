@@ -9,6 +9,7 @@ import TrendingProducts from "./components/TrendingProducts";
 import SpecialOffers from "./components/SpecialOffers";
 import Checkout from "./components/Checkout";
 import Login from "./components/Login";
+import Signup from "./components/Signup";
 import AddProduct from "./components/AddProduct";
 import DummyPage from "./components/DummyPage";
 
@@ -18,7 +19,7 @@ function AppContent({ isCartOpen, setIsCartOpen }) {
   const [showFooter, setShowFooter] = useState(true);
 
   React.useEffect(() => {
-    if (location.pathname === "/checkout" || location.pathname === "/login") {
+    if (location.pathname === "/checkout" || location.pathname === "/login" || location.pathname === "/signup") {
       setShowFooter(false);
     } else {
       setShowFooter(true);
@@ -46,6 +47,7 @@ function AppContent({ isCartOpen, setIsCartOpen }) {
           <Route path="/trending-products" element={<TrendingProducts />} />
           <Route path="/special-offers" element={<SpecialOffers />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route 
             path="/checkout" 
             element={

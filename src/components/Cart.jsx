@@ -273,15 +273,6 @@ const Cart = ({ isOpen, onClose }) => {
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
-                        {cartItems.length > 0 && (
-                            <button
-                                id="clear-cart-btn"
-                                onClick={() => dispatch(clearCart())}
-                                className="rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1 text-[10px] font-semibold text-rose-600 transition-all duration-200 hover:bg-rose-100 hover:text-rose-700 cursor-pointer"
-                            >
-                                Clear All
-                            </button>
-                        )}
                         <button
                             id="close-cart-btn"
                             onClick={onClose}
@@ -372,7 +363,11 @@ const Cart = ({ isOpen, onClose }) => {
                 onChooseOption={(option) => {
                     setShowAuthPrompt(false);
                     onClose();
-                    navigate(`/login?redirect=/checkout&tab=${option}`);
+                    if (option === "signup") {
+                        navigate(`/signup?redirect=/checkout`);
+                    } else {
+                        navigate(`/login?redirect=/checkout`);
+                    }
                 }}
             />
         </>

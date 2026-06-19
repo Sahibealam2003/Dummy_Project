@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const INFO_ROW_CLS = "flex flex-col border-b border-[#f5f3ef] pb-3 last:border-0 last:pb-0";
+const INFO_ROW_CLS = "flex flex-col border-b border-[#f5f3ef] pb-1 last:border-0 last:pb-0";
 const INFO_LABEL_CLS = "text-[10px] font-extrabold uppercase tracking-widest text-[#8c7e74] mb-1";
 const INFO_VAL_CLS = "text-sm font-semibold text-[#2c2420]";
 
@@ -43,11 +43,11 @@ const ProfileModal = ({ isOpen, onClose, user }) => {
                 </button>
 
                 {/* Profile Header */}
-                <div className="flex flex-col items-center mb-6 pt-2">
-                    <span className="rounded-full bg-[#fff3ed] border border-[#e8622a]/20 px-3 py-1 text-[9px] font-bold uppercase tracking-widest text-[#e8622a] mb-4">
+                <div className="flex flex-col items-center mb-4 pt-2">
+                    <span className="rounded-full bg-[#fff3ed] border border-[#e8622a]/20 px-3 text-[9px] font-bold uppercase tracking-widest text-[#e8622a] mb-2">
                         Member Account
                     </span>
-                    
+
                     {/* Large Circle Avatar */}
                     <div className="h-20 w-20 rounded-full overflow-hidden border-2 border-[#e8622a]/30 shadow-lg mb-3">
                         {user.avatar ? (
@@ -61,7 +61,7 @@ const ProfileModal = ({ isOpen, onClose, user }) => {
                             </div>
                         )}
                     </div>
-                    
+
                     <h2 className="text-xl font-bold tracking-tight text-[#2c2420]">
                         {user.name}
                     </h2>
@@ -71,7 +71,7 @@ const ProfileModal = ({ isOpen, onClose, user }) => {
                 </div>
 
                 {/* User Details Details */}
-                <div className="bg-[#fafafa]/50 border border-[#ede8e2] rounded-2xl p-4.5 space-y-3 mb-6">
+                <div className="bg-[#fafafa]/50 border border-[#ede8e2] rounded-2xl p-4 space-y-3 mb-2">
                     <div className={INFO_ROW_CLS}>
                         <span className={INFO_LABEL_CLS}>Full Name</span>
                         <span className={INFO_VAL_CLS}>{user.name}</span>

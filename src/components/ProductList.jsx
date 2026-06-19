@@ -42,7 +42,6 @@ const SLIDES = [
 
 
 
-/* Hero Carousel  */
 const HeroBanner = () => {
     const [current, setCurrent] = useState(0);
 
@@ -50,6 +49,13 @@ const HeroBanner = () => {
         const t = setInterval(() => setCurrent(c => (c + 1) % SLIDES.length), 5000);
         return () => clearInterval(t);
     }, []);
+
+    const handleCtaClick = () => {
+        const target = document.getElementById("product-section");
+        if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    };
 
     const prev = SLIDES[(current - 1 + SLIDES.length) % SLIDES.length];
     const slide = SLIDES[current];
@@ -61,7 +67,7 @@ const HeroBanner = () => {
                 <div className="flex items-stretch gap-3" style={{ height: 220 }}>
                     {/* Left side peek */}
                     <div
-                        className="hidden md:flex w-32 shrink-0 items-center justify-center rounded cursor-pointer transition-transform hover:scale-[1.01] overflow-hidden relative"
+                        className="hidden md:flex w-32 shrink-0 items-center justify-center rounded-xl cursor-pointer transition-transform hover:scale-[1.01] overflow-hidden relative"
                         style={{ background: prev.bg, opacity: 0.65 }}
                         onClick={() => setCurrent((current - 1 + SLIDES.length) % SLIDES.length)}
                     >
@@ -73,7 +79,7 @@ const HeroBanner = () => {
 
                     {/* Main slide */}
                     <div
-                        className="flex-1 rounded-2xl p-6 md:p-8 flex flex-col justify-between relative overflow-hidden transition-all duration-500 shadow-sm"
+                        className="flex-1 rounded-xl p-6 md:p-8 flex flex-col justify-between relative overflow-hidden transition-all duration-500 shadow-sm"
                         style={{ background: slide.bg }}
                     >
                         {/* Content side */}
@@ -89,7 +95,10 @@ const HeroBanner = () => {
                                     {slide.sub}
                                 </p>
                             </div>
-                            <button className="btn-glow inline-flex w-fit items-center justify-center gap-1.5 rounded-xl bg-white px-5 py-2 text-xs font-bold text-[#2c2420] hover:bg-[#fcfaf7] active:scale-95 transition-all mt-4 cursor-pointer">
+                            <button 
+                                onClick={handleCtaClick}
+                                className="btn-glow inline-flex w-fit items-center justify-center gap-1.5 rounded-xl bg-white px-5 py-2 text-xs font-bold text-[#2c2420] hover:bg-[#fcfaf7] active:scale-95 transition-all mt-4 cursor-pointer"
+                            >
                                 {slide.cta} →
                             </button>
                         </div>
@@ -215,7 +224,7 @@ const ProductList = () => {
 
 
             {/* Product section */}
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 py-8">
+            <div id="product-section" className="mx-auto max-w-7xl px-4 sm:px-6 py-8">
 
                 {/* Section header */}
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
