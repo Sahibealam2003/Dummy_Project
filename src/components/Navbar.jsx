@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../reducers/authSlice";
+import { logoutApi } from "../services/authApi";
+import ProfileModal from "./ProfileModal";
 
 const PROMOS = [
     <span key="p0" className="inline-flex items-center gap-1.5">
@@ -26,6 +28,7 @@ const Navbar = ({ onCartOpen }) => {
     const dispatch = useDispatch();
     const { isLoggedIn, user } = useSelector((state) => state.auth);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [profileOpen, setProfileOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     const [scrolled, setScrolled] = useState(false);
@@ -189,12 +192,20 @@ const Navbar = ({ onCartOpen }) => {
                                     className="flex items-center gap-2 rounded-xl border px-3 py-1.5 text-sm font-semibold transition-colors hover:bg-stone-50 cursor-pointer"
                                     style={{ borderColor: "#d4c9be", color: "#2c2420" }}
                                 >
-                                    <div
-                                        className="flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-white uppercase"
-                                        style={{ background: "#e8622a" }}
-                                    >
-                                        {user?.name ? user.name.split(" ").map(n => n[0]).join("").slice(0, 2) : "U"}
-                                    </div>
+                                    {user?.avatar ? (
+                                        <img
+                                            src={user.avatar}
+                                            className="h-6 w-6 rounded-full object-cover border border-[#e4dfd9]"
+                                            alt="avatar"
+                                        />
+                                    ) : (
+                                        <div
+                                            className="flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-white uppercase"
+                                            style={{ background: "#e8622a" }}
+                                        >
+                                            {user?.name ? user.name.split(" ").map(n => n[0]).join("").slice(0, 2) : "U"}
+                                        </div>
+                                    )}
                                     <span className="hidden sm:inline text-xs truncate max-w-[80px]">
                                         {user?.name?.split(" ")[0]}
                                     </span>
@@ -209,12 +220,40 @@ const Navbar = ({ onCartOpen }) => {
                                         className="absolute right-0 mt-2 w-48 rounded-2xl border border-[#ede8e2] bg-white p-2.5 shadow-xl animate-scale-in"
                                         style={{ zIndex: 100 }}
                                     >
-                                        <div className="px-3 py-2 border-b border-[#f5f3ef] mb-1.5">
-                                            <p className="text-xs font-bold text-[#2c2420] truncate">{user?.name}</p>
-                                            <p className="text-[10px] text-[#8c7e74] truncate mt-0.5">{user?.email}</p>
+                                        <div className="px-3 py-2 border-b border-[#f5f3ef] mb-1">
+                                            <div className="flex items-center gap-2 mb-1">
+                                                {user?.avatar && (
+                                                    <img
+                                                        src={user.avatar}
+                                                        className="h-7 w-7 rounded-full object-cover border border-[#e4dfd9]"
+                                                        alt="avatar"
+                                                    />
+                                                )}
+                                                <div className="truncate">
+                                                    <p className="text-xs font-bold text-[#2c2420] truncate">{user?.name}</p>
+                                                    <p className="text-[9px] text-[#8c7e74] truncate">{user?.email}</p>
+                                                </div>
+                                            </div>
                                         </div>
                                         <button
                                             onClick={() => {
+                                                setProfileOpen(true);
+                                                setDropdownOpen(false);
+                                            }}
+                                            className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-left text-xs font-bold text-[#5a4e46] transition-colors hover:bg-stone-50 cursor-pointer"
+                                        >
+                                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                            </svg>
+                                            My Profile
+                                        </button>
+                                        <button
+                                            onClick={async () => {
+                                                try {
+                                                    await logoutApi();
+                                                } catch (e) {
+                                                    console.error("Backend logout error:", e);
+                                                }
                                                 dispatch(logout());
                                                 setDropdownOpen(false);
                                                 nav("/");
@@ -247,6 +286,7 @@ const Navbar = ({ onCartOpen }) => {
                     </div>
                 </div>
             </div>
+            <ProfileModal isOpen={profileOpen} onClose={() => setProfileOpen(false)} user={user} />
         </header>
     );
 };
